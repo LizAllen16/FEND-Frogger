@@ -1,5 +1,6 @@
+
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function(y) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -7,8 +8,8 @@ var Enemy = function() {
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png',
     this.speed = 256;
-    Enemy.x = canvas.width/2;
-    Enemy.y = canvas.height/2;
+    this.x = 0;
+    this.y = y;
 };
 
 // Update the enemy's position, required method for game
@@ -17,43 +18,39 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-
-    Enemy.currentpos = startpos/(speed * dt);
-    if (Enemy.currentpos === player.currentpos) {
-        player.x = canvas.width/2;
-        player.y = 606;
+    this.x = this.x + this.speed * dt;
+    if (this.x > 505){
+        this.x = -100;
+      };
     };
-
-};
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
+
+    };
+
 
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
 var Hero = function() {
   this.sprite = 'images/char-cat-girl.png';
-  var speed = 256;
-  Hero.x = canvas.width/2;
-  Hero.y = 606;
+  this.speed = 256;
+  this.x = 353.5;
+  this.y = 606;
 };
 
 Hero.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    Hero.currentpos = startpos/(speed * dt);
-    if (Enemy.currentpos === Hero.currentpos) {
-        Hero.x = canvas.width/2;
-        Hero.y = 606;
+    this.x = this.x + this.speed * dt;
+    if (this.x > 505){
+        this.x = -100;
+      };
     };
 
-};
-
-// Draw the enemy on the screen, required method for game
 Hero.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
@@ -67,7 +64,13 @@ Hero.prototype.handleInput = function(){
 // Place the player object in a variable called player
 
 var allEnemies = [];
-var player = new Hero;
+var player = new Hero();
+var beetle1 = new Enemy(65);
+var beetle2 = new Enemy(145);
+var beetle3 = new Enemy(225);
+var beetle4 = new Enemy(265);
+var beetle5 = new Enemy(330);
+allEnemies.push(beetle1, beetle2, beetle3);
 
 
 
