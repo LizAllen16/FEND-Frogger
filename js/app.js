@@ -27,7 +27,6 @@ Enemy.prototype.update = function(dt) {
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-
     };
 
 
@@ -35,29 +34,47 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 var Hero = function() {
-  this.sprite = 'images/char-cat-girl.png';
-  this.speed = 256;
-  this.x = 353.5;
-  this.y = 606;
+  this.sprite = 'images/char-cat-girl.png',
+  this.speed = 100;
+  this.x = 200;
+  this.y =400;
 };
 
 Hero.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    this.x = this.x + this.speed * dt;
-    if (this.x > 505){
-        this.x = -100;
-      };
-    };
+
+};
 
 Hero.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 Hero.prototype.handleInput = function(){
-
-}
+  // if (this.y > 400 || this.y < -50){
+  //   this.y = 400;
+  // };
+  // if (this.x > 400 || this.x < 0){
+  //   this.x = 200;
+  // };
+  // if (this.y < 400 && this.y > -50){
+  //   for (38 in 'allowedKeys'){
+  //     this.y = this.y - 83;
+  //   };
+  //   for (40 in 'allowedKeys'){
+  //     this.y = this.y + 83;
+  //   }
+  // }
+  // if (this.x < 400 && this.x > 0){
+  //   for (37 in 'allowedKeys'){
+  //     this.x = this.x - 101;
+  //   };
+  //   for (39 in 'allowedKeys'){
+  //     this.x = this.x + 101;
+  //   };
+  // }
+};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -68,8 +85,7 @@ var player = new Hero();
 var beetle1 = new Enemy(65);
 var beetle2 = new Enemy(145);
 var beetle3 = new Enemy(225);
-var beetle4 = new Enemy(265);
-var beetle5 = new Enemy(330);
+
 allEnemies.push(beetle1, beetle2, beetle3);
 
 
