@@ -51,29 +51,29 @@ Hero.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-Hero.prototype.handleInput = function(){
-  // if (this.y > 400 || this.y < -50){
-  //   this.y = 400;
-  // };
-  // if (this.x > 400 || this.x < 0){
-  //   this.x = 200;
-  // };
-  // if (this.y < 400 && this.y > -50){
-  //   for (38 in 'allowedKeys'){
-  //     this.y = this.y - 83;
-  //   };
-  //   for (40 in 'allowedKeys'){
-  //     this.y = this.y + 83;
-  //   }
-  // }
-  // if (this.x < 400 && this.x > 0){
-  //   for (37 in 'allowedKeys'){
-  //     this.x = this.x - 101;
-  //   };
-  //   for (39 in 'allowedKeys'){
-  //     this.x = this.x + 101;
-  //   };
-  // }
+Hero.prototype.handleInput = function(key){
+  if (this.y > 400 || this.y < -50){
+    this.y = 400;
+  };
+  if (this.x > 400 || this.x < 0){
+    this.x = 200;
+  };
+  if (this.y < 400 && this.y > - 50){
+    if (key === 'up'){
+      this.y = this.y - 101;
+    };
+    if (key === 'down') {
+      this.y  = this.y + 101;
+    };
+  };
+  if (this.x < 400 && this.x > 0){
+    if (key === 'left'){
+      this.x = this.x - 101;
+    };
+    if (key === 'right'){
+      this.x = this.x + 101;
+    };
+  };
 };
 
 // Now instantiate your objects.
