@@ -22,8 +22,8 @@ Enemy.prototype.update = function(dt) {
     if (this.x > 505){
         this.x = -100;
       };
-    };
 
+};
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -38,13 +38,29 @@ var Hero = function() {
   this.speed = 100;
   this.x = 200;
   this.y =400;
+  this.hitDetect = function (){
+    for (i=0;i<allEnemies.length; i++){
+      if (this.y <= allEnemies[i].y + 50 && this.x <= allEnemies[i].x + 50){
+           this.x = 200;
+           this.y = 400;
+           console.log("it ran");
+         };
+    }
+  };
 };
 
 Hero.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-
+    if (this.y > 400 || this.y < 0){
+      this.y = 400;
+      this.x = 200;
+    };
+    if (this.x > 400 || this.x < 0){
+      this.x = 200;
+    };
+    player.hitDetect();
 };
 
 Hero.prototype.render = function() {
@@ -52,27 +68,17 @@ Hero.prototype.render = function() {
 };
 
 Hero.prototype.handleInput = function(key){
-  if (this.y > 400 || this.y < -50){
-    this.y = 400;
+  if (key === 'up'){
+      this.y -= 25;
   };
-  if (this.x > 400 || this.x < 0){
-    this.x = 200;
+  if (key === 'down') {
+      this.y += 25;
   };
-  if (this.y < 400 && this.y > - 50){
-    if (key === 'up'){
-      this.y = this.y - 101;
-    };
-    if (key === 'down') {
-      this.y  = this.y + 101;
-    };
+  if (key === 'left'){
+      this.x -= 100;
   };
-  if (this.x < 400 && this.x > 0){
-    if (key === 'left'){
-      this.x = this.x - 101;
-    };
-    if (key === 'right'){
-      this.x = this.x + 101;
-    };
+  if (key === 'right'){
+      this.x += 100;
   };
 };
 
