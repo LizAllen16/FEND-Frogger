@@ -32,6 +32,7 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
+var hitBox = 25
 var Hero = function() {
   this.sprite = 'images/char-cat-girl.png',
   this.speed = 100;
@@ -39,15 +40,36 @@ var Hero = function() {
   this.y =400;
   this.hitDetect = function (){
     for (i=0;i<allEnemies.length; i++){
-      var hitBox = 25 // number
       if (this.y <= allEnemies[i].y + hitBox && this.x <= allEnemies[i].x + hitBox && allEnemies[i].y<= this.y + hitBox && allEnemies[i].x <= this.x +hitBox){
-           this.x = 200;
-           this.y = 400;
-           Enemy.speed = Math.ceil(Math.random()*250);
            reset();
+           Enemy.speed = Math.ceil(Math.random()*250);
          };
     }
   };
+};
+
+var Rock = function(){
+  this.sprite = 'images/Rock.png';
+  this.speed = 150;
+  this.x = 200;
+  this.y = -15;
+};
+
+Rock.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  };
+Rock.prototype.update = function(dt) {
+      // You should multiply any movement by the dt parameter
+      // which will ensure the game runs at the same speed for
+      // all computers.
+    this.x += this.speed * dt;
+    if (this.x > 505){
+        this.x = -100;
+    };
+    if (player.y <= this.y + hitBox && player.x <= this.x + hitBox && this.y <= player.y + hitBox && this.x <= player.x + hitBox){
+      this.x = player.x;
+      this.y = player.y;
+    };
 };
 
 Hero.prototype.update = function(dt) {
@@ -79,7 +101,6 @@ Hero.prototype.render = function() {
 Hero.prototype.handleInput = function(key){
   if (key === 'up'){
       this.y -= 83;
-      console.log(this.y);
   };
   if (key === 'down') {
       this.y += 83;
@@ -92,31 +113,14 @@ Hero.prototype.handleInput = function(key){
   };
 };
 
-var Rocks = function(){
-  this.sprite = 'images/Rock.png';
-  this.speed = 150;
-  this.x = 0;
-  this.y = -15;
-};
 
-Rocks.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-  };
-Rocks.prototype.update = function(dt) {
-      // You should multiply any movement by the dt parameter
-      // which will ensure the game runs at the same speed for
-      // all computers.
-    this.x += this.speed * dt;
-
-};
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
 var allEnemies = [];
 var player = new Hero();
-var rock1 = new Rocks();
-var numBeetles = 3;
+var rock1 = new Rock();
 
 var beetleCreator = function(numBeetles) {
   var beetleYpos = 65;
@@ -130,24 +134,23 @@ var beetleCreator = function(numBeetles) {
     beetleXstart += Math.floor(Math.random() * 120);
   };
 };
-beetleCreator(numBeetles);
-
+beetleCreator(3);
 
 var reset = function(){
       player.y = 400;
       player.x = 200;
-
 };
 
 var levelUp = function(dt){
-  for (beetle in allEnemies){
-    if (player.y <= -15){
-      var level = 5
-      allEnemies[beetle].speed += level;
-      setTimeout(reset, 1000);
-      level+= 5;
-      swal({   title: "LEVEL UP!",   text: "We're currently over caffeinating the bugs. You ready for the next level?", confirmButtonText: "I was born ready.", imageURL: "/images/Star.png" });
-    };
+  if (player.y <= rock1.y + hitBox && player.x <= rock1.x + hitBox && rock1.y <= player.y + hitBox && rock1.x <= player.x + hitBox){
+    for (beetle in allEnemies){
+        var level = 5
+        allEnemies[beetle].speed += level;
+        setTimeout(reset, 1000);
+        setTimeout(rock1.update, 1000);
+        level+= 5;
+        swal({   title: "LEVEL UP!",   text: "The bugs are currently over caffeinating. You ready for the next level?", confirmButtonText: "I was born ready.", imageURL: "/images/Star.png" });
+      };
   };
 };
 
